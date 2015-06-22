@@ -25,7 +25,7 @@
     </GlobalNamingResources>
 
     <Service name='Catalina'>
-        <Executor name="nioconnector" namePrefix="nioconnector" maxIdleTime="10000" prestartminSpareThreads="true" maxThreads="384" minSpareThreads="64"/>
+        <Executor name="nioconnector" namePrefix="nioconnector" maxQueueSize="1000" maxIdleTime="10000" prestartminSpareThreads="true" maxThreads="384" minSpareThreads="64"/>
         <Connector executor="nioconnector" maxThreads="384" minSpareThreads="64" server="Redacted" port='${http.port}' bindOnInit="false" protocol="org.apache.coyote.http11.Http11NioProtocol" compression="on" compressionMinSize="1024" compressableMimeType="application/json,text/html,text/xml" maxConnections="10000" connectionTimeout="30000" keepAliveTimeout="30000" maxKeepAliveRequests="-1" maxHeaderCount="-1" maxParameterCount="-1" maxPostSize="-1" maxSavePostSize="-1"/>
 
         <Engine defaultHost='localhost' name='Catalina'>

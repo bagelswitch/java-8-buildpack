@@ -17,19 +17,24 @@
 
 # Kill script for use as the parameter of OpenJDK's -XX:OnOutOfMemoryError
 
-COMMAND='pkill -9 -f .*-XX:OnOutOfMemoryError=.*killjava.*'
+THREAD_DUMP_COMMAND='pkill -3 -f .*-XX:OnOutOfMemoryError=.*killjava.*'
+KILL_COMMAND='pkill -9 -f .*-XX:OnOutOfMemoryError=.*killjava.*'
 LOG_FILE="$PWD/.out-of-memory.log"
 
 function log {
   echo "$(date +%FT%T.%2N%z) FATAL $1" >> $LOG_FILE
 }
 
+log "Sending 'kill -3' signal ahead of killing forcibly"
+$($THREAD_DUMP_COMMAND)
+sleep 2
+
 log "Attempting to kill Java processes using '$COMMAND'"
 log "Processes Before:
 $(ps -ef)
 "
 
-$($COMMAND)
+$($KILL_COMMAND)
 
 log "Processes After:
 $(ps -ef)
